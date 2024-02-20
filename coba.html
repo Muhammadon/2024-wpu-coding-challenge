@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coba Coba</title>
+</head>
+<body>
+    <h1 id="content"></h1>
+    <ul>
+        <li><h1 id="head"></h1></li>
+        <li><h2 id="sub_head"></h2></li>
+        <li><h2 id="sub_head2"></h2></li>
+        <li><h2 id="sub_head3"></h2></li>
+    </ul>
+    <h1 id="content2"></h1>
+    
+    
+    <script>
+        const head = document.getElementById("head");
+        const sub_head = document.getElementById("sub_head");
+        const sub_head2 = document.getElementById("sub_head2");
+        const sub_hea3 = document.getElementById("sub_head3");
+        const content = document.getElementById("content");
+        const content2 = document.getElementById("content2");
+
+
+        const getData = () => {
+            return new Promise((myResolve, myReject) => {
+                const req = new XMLHttpRequest();
+
+                req.onload = () => {
+                    if(req.status === 200) {
+                        myResolve(JSON.parse(req.responseText));
+                    } else {
+                        myReject("Failed to get data");
+                    }
+                }
+
+                req.open("GET", "/server/data.json");
+                req.send();
+            });
+        };
+
+        getData()
+            .then((response) => {
+                content.innerText = "Start";
+                setTimeout(() => {
+                    const {nama, nim, mood, her} = response;
+                    console.log(`${nama} ${nim} ${mood} ${her}`);
+                    head.innerText = `nama : ${nama}`;
+                    sub_head.innerText = `nim : ${nim}`;
+                    sub_head2.innerText = `mood : ${mood}`;
+                    sub_head3.innerText = `her : ${her}`;
+                }, 1500);
+                setTimeout(() => {
+                    content2.innerText = "get data Sukses"
+                }, 2500);
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    </script>
+</body>
+</html>
