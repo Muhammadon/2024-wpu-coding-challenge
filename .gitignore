@@ -3,3 +3,6 @@ apapun.html
 
 # Ignore folder server
 server/
+
+# Ignore file .gitignore
+.gitignore
